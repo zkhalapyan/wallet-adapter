@@ -84,7 +84,7 @@ export class SolletWalletAdapter extends EventEmitter<WalletAdapterEvents> imple
                         }, 100);
                     }
                 });
-            } catch (error) {
+            } catch (error: any) {
                 if (error instanceof WalletError) throw error;
                 throw new WalletConnectionError(error?.message, error);
             } finally {
@@ -96,7 +96,7 @@ export class SolletWalletAdapter extends EventEmitter<WalletAdapterEvents> imple
             this._wallet = wallet;
 
             this.emit('connect');
-        } catch (error) {
+        } catch (error: any) {
             this.emit('error', error);
             throw error;
         } finally {
@@ -113,7 +113,7 @@ export class SolletWalletAdapter extends EventEmitter<WalletAdapterEvents> imple
 
             try {
                 await wallet.disconnect();
-            } catch (error) {
+            } catch (error: any) {
                 this.emit('error', new WalletDisconnectionError(error.message, error));
             }
 
@@ -128,10 +128,10 @@ export class SolletWalletAdapter extends EventEmitter<WalletAdapterEvents> imple
 
             try {
                 return wallet.signTransaction(transaction);
-            } catch (error) {
+            } catch (error: any) {
                 throw new WalletSignatureError(error?.message, error);
             }
-        } catch (error) {
+        } catch (error: any) {
             this.emit('error', error);
             throw error;
         }
@@ -144,10 +144,10 @@ export class SolletWalletAdapter extends EventEmitter<WalletAdapterEvents> imple
 
             try {
                 return wallet.signAllTransactions(transactions);
-            } catch (error) {
+            } catch (error: any) {
                 throw new WalletSignatureError(error?.message, error);
             }
-        } catch (error) {
+        } catch (error: any) {
             this.emit('error', error);
             throw error;
         }

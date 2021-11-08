@@ -61,14 +61,14 @@ export class LedgerWalletAdapter extends EventEmitter<WalletAdapterEvents> imple
             let transport: Transport;
             try {
                 transport = await TransportWebHid.create();
-            } catch (error) {
+            } catch (error: any) {
                 throw new WalletConnectionError(error?.message, error);
             }
 
             let publicKey: PublicKey;
             try {
                 publicKey = await getPublicKey(transport, this._derivationPath);
-            } catch (error) {
+            } catch (error: any) {
                 throw new WalletPublicKeyError(error?.message, error);
             }
 
@@ -78,7 +78,7 @@ export class LedgerWalletAdapter extends EventEmitter<WalletAdapterEvents> imple
             this._publicKey = publicKey;
 
             this.emit('connect');
-        } catch (error) {
+        } catch (error: any) {
             this.emit('error', error);
             throw error;
         } finally {
@@ -96,7 +96,7 @@ export class LedgerWalletAdapter extends EventEmitter<WalletAdapterEvents> imple
 
             try {
                 await transport.close();
-            } catch (error) {
+            } catch (error: any) {
                 this.emit('error', new WalletDisconnectionError(error.message, error));
             }
 
@@ -113,12 +113,12 @@ export class LedgerWalletAdapter extends EventEmitter<WalletAdapterEvents> imple
             try {
                 const signature = await signTransaction(transport, transaction, this._derivationPath);
                 transaction.addSignature(publicKey, signature);
-            } catch (error) {
+            } catch (error: any) {
                 throw new WalletSignatureError(error?.message, error);
             }
 
             return transaction;
-        } catch (error) {
+        } catch (error: any) {
             this.emit('error', error);
             throw error;
         }
@@ -136,12 +136,12 @@ export class LedgerWalletAdapter extends EventEmitter<WalletAdapterEvents> imple
                     const signature = await signTransaction(transport, transaction, derivationPath);
                     transaction.addSignature(publicKey, signature);
                 }
-            } catch (error) {
+            } catch (error: any) {
                 throw new WalletSignatureError(error?.message, error);
             }
 
             return transactions;
-        } catch (error) {
+        } catch (error: any) {
             this.emit('error', error);
             throw error;
         }

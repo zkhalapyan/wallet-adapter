@@ -182,7 +182,7 @@ export const WalletProvider: FC<WalletProviderProps> = ({
                 setConnecting(true);
                 try {
                     await adapter.connect();
-                } catch (error) {
+                } catch (error: any) {
                     // Don't throw error, but onError will still be called
                 } finally {
                     setConnecting(false);

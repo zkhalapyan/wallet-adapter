@@ -94,7 +94,7 @@ export class TorusWalletAdapter extends EventEmitter<WalletAdapterEvents> implem
                         window.removeEventListener('unhandledrejection', listener!);
                     }
                 }
-            } catch (error) {
+            } catch (error: any) {
                 if (error instanceof WalletError) throw error;
                 throw new WalletConnectionError(error?.message, error);
             }
@@ -102,7 +102,7 @@ export class TorusWalletAdapter extends EventEmitter<WalletAdapterEvents> implem
             let keypair: Keypair;
             try {
                 keypair = Keypair.fromSecretKey(getED25519Key(privateKey).sk);
-            } catch (error) {
+            } catch (error: any) {
                 throw new WalletKeypairError(error?.message, error);
             }
 
@@ -110,7 +110,7 @@ export class TorusWalletAdapter extends EventEmitter<WalletAdapterEvents> implem
             this._keypair = keypair;
 
             this.emit('connect');
-        } catch (error) {
+        } catch (error: any) {
             this.emit('error', error);
             throw error;
         } finally {
@@ -127,7 +127,7 @@ export class TorusWalletAdapter extends EventEmitter<WalletAdapterEvents> implem
             try {
                 await openLogin.logout();
                 await openLogin._cleanup();
-            } catch (error) {
+            } catch (error: any) {
                 this.emit('error', new WalletDisconnectionError(error.message, error));
             }
 
@@ -142,12 +142,12 @@ export class TorusWalletAdapter extends EventEmitter<WalletAdapterEvents> implem
 
             try {
                 transaction.partialSign(keypair);
-            } catch (error) {
+            } catch (error: any) {
                 throw new WalletSignatureError(error?.message, error);
             }
 
             return transaction;
-        } catch (error) {
+        } catch (error: any) {
             this.emit('error', error);
             throw error;
         }
@@ -162,12 +162,12 @@ export class TorusWalletAdapter extends EventEmitter<WalletAdapterEvents> implem
                 for (const transaction of transactions) {
                     transaction.partialSign(keypair);
                 }
-            } catch (error) {
+            } catch (error: any) {
                 throw new WalletSignatureError(error?.message, error);
             }
 
             return transactions;
-        } catch (error) {
+        } catch (error: any) {
             this.emit('error', error);
             throw error;
         }

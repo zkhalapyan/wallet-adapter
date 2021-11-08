@@ -112,7 +112,7 @@ export class PhantomWalletAdapter extends EventEmitter<WalletAdapterEvents> impl
                             reject(reason);
                         });
                     });
-                } catch (error) {
+                } catch (error: any) {
                     if (error instanceof WalletError) throw error;
                     throw new WalletConnectionError(error?.message, error);
                 } finally {
@@ -123,14 +123,14 @@ export class PhantomWalletAdapter extends EventEmitter<WalletAdapterEvents> impl
             let buffer: Buffer;
             try {
                 buffer = wallet.publicKey!.toBuffer();
-            } catch (error) {
+            } catch (error: any) {
                 throw new WalletAccountError(error?.message, error);
             }
 
             let publicKey: PublicKey;
             try {
                 publicKey = new PublicKey(buffer);
-            } catch (error) {
+            } catch (error: any) {
                 throw new WalletPublicKeyError(error?.message, error);
             }
 
@@ -140,7 +140,7 @@ export class PhantomWalletAdapter extends EventEmitter<WalletAdapterEvents> impl
             this._publicKey = publicKey;
 
             this.emit('connect');
-        } catch (error) {
+        } catch (error: any) {
             this.emit('error', error);
             throw error;
         } finally {
@@ -158,7 +158,7 @@ export class PhantomWalletAdapter extends EventEmitter<WalletAdapterEvents> impl
 
             try {
                 await wallet.disconnect();
-            } catch (error) {
+            } catch (error: any) {
                 this.emit('error', new WalletDisconnectionError(error.message, error));
             }
 
@@ -173,10 +173,10 @@ export class PhantomWalletAdapter extends EventEmitter<WalletAdapterEvents> impl
 
             try {
                 return wallet.signTransaction(transaction);
-            } catch (error) {
+            } catch (error: any) {
                 throw new WalletSignatureError(error?.message, error);
             }
-        } catch (error) {
+        } catch (error: any) {
             this.emit('error', error);
             throw error;
         }
@@ -189,10 +189,10 @@ export class PhantomWalletAdapter extends EventEmitter<WalletAdapterEvents> impl
 
             try {
                 return wallet.signAllTransactions(transactions);
-            } catch (error) {
+            } catch (error: any) {
                 throw new WalletSignatureError(error?.message, error);
             }
-        } catch (error) {
+        } catch (error: any) {
             this.emit('error', error);
             throw error;
         }

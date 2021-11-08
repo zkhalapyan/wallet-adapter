@@ -89,7 +89,7 @@ export class SolflareWalletAdapter extends EventEmitter<WalletAdapterEvents> imp
             if (!wallet.isConnected) {
                 try {
                     await wallet.connect();
-                } catch (error) {
+                } catch (error: any) {
                     if (error instanceof WalletError) throw error;
                     throw new WalletConnectionError(error?.message, error);
                 }
@@ -98,14 +98,14 @@ export class SolflareWalletAdapter extends EventEmitter<WalletAdapterEvents> imp
             let buffer: Buffer;
             try {
                 buffer = wallet.publicKey!.toBuffer();
-            } catch (error) {
+            } catch (error: any) {
                 throw new WalletAccountError(error?.message, error);
             }
 
             let publicKey: PublicKey;
             try {
                 publicKey = new PublicKey(buffer);
-            } catch (error) {
+            } catch (error: any) {
                 throw new WalletPublicKeyError(error?.message, error);
             }
 
@@ -115,7 +115,7 @@ export class SolflareWalletAdapter extends EventEmitter<WalletAdapterEvents> imp
             this._publicKey = publicKey;
 
             this.emit('connect');
-        } catch (error) {
+        } catch (error: any) {
             this.emit('error', error);
             throw error;
         } finally {
@@ -133,7 +133,7 @@ export class SolflareWalletAdapter extends EventEmitter<WalletAdapterEvents> imp
 
             try {
                 await wallet.disconnect();
-            } catch (error) {
+            } catch (error: any) {
                 this.emit('error', new WalletDisconnectionError(error.message, error));
             }
 
@@ -148,10 +148,10 @@ export class SolflareWalletAdapter extends EventEmitter<WalletAdapterEvents> imp
 
             try {
                 return wallet.signTransaction(transaction);
-            } catch (error) {
+            } catch (error: any) {
                 throw new WalletSignatureError(error?.message, error);
             }
-        } catch (error) {
+        } catch (error: any) {
             this.emit('error', error);
             throw error;
         }
@@ -164,10 +164,10 @@ export class SolflareWalletAdapter extends EventEmitter<WalletAdapterEvents> imp
 
             try {
                 return wallet.signAllTransactions(transactions);
-            } catch (error) {
+            } catch (error: any) {
                 throw new WalletSignatureError(error?.message, error);
             }
-        } catch (error) {
+        } catch (error: any) {
             this.emit('error', error);
             throw error;
         }
