@@ -2,6 +2,7 @@ import { WalletAdapter } from '@solana/wallet-adapter-base';
 import { LedgerWalletAdapter, LedgerWalletAdapterConfig } from '@solana/wallet-adapter-ledger';
 import { MathWalletWalletAdapter, MathWalletWalletAdapterConfig } from '@solana/wallet-adapter-mathwallet';
 import { PhantomWalletAdapter, PhantomWalletAdapterConfig } from '@solana/wallet-adapter-phantom';
+import { SlopeWalletAdapter, SlopeWalletAdapterConfig } from '@solana/wallet-adapter-slope';
 import { SolflareWalletAdapter, SolflareWalletAdapterConfig } from '@solana/wallet-adapter-solflare';
 import { SolletWalletAdapter, SolletWalletAdapterConfig } from '@solana/wallet-adapter-sollet';
 import { SolongWalletAdapter, SolongWalletAdapterConfig } from '@solana/wallet-adapter-solong';
@@ -11,6 +12,7 @@ export enum WalletName {
     Ledger = 'Ledger',
     MathWallet = 'MathWallet',
     Phantom = 'Phantom',
+    Slope = 'Slope',
     Solflare = 'Solflare',
     SolflareWeb = 'Solflare (Web)',
     Sollet = 'Sollet',
@@ -46,6 +48,13 @@ export const getPhantomWallet = (config?: PhantomWalletAdapterConfig): Wallet =>
     url: 'https://www.phantom.app',
     icon: `${ICONS_URL}/phantom.svg`,
     adapter: () => new PhantomWalletAdapter(config),
+});
+
+export const getSlopeWallet = (config?: SlopeWalletAdapterConfig): Wallet => ({
+    name: WalletName.Slope,
+    url: 'https://slope.finance',
+    icon: `${ICONS_URL}/slope.svg`,
+    adapter: () => new SlopeWalletAdapter(config),
 });
 
 export const getSolflareWallet = (config?: SolflareWalletAdapterConfig): Wallet => ({
